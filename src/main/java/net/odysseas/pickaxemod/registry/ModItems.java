@@ -10,13 +10,13 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import net.odysseas.pickaxemod.Pickaxemod;
+import net.odysseas.pickaxemod.PickaxeMod;
 import net.odysseas.pickaxemod.item.CustomPickaxe;
 
-@Mod.EventBusSubscriber(modid = Pickaxemod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = PickaxeMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems {
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Pickaxemod.MODID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, PickaxeMod.MODID);
 
     // Register the custom pickaxeA
     public static final RegistryObject<Item> ODY_PICKAXE = ITEMS.register("ody_pickaxe",
@@ -26,6 +26,7 @@ public class ModItems {
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
+
 
     // Add the item to the "Tools and Utilities" creative tab
     @SubscribeEvent

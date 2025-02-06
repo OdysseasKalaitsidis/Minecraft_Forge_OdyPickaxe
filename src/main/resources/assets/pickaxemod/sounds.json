@@ -1,0 +1,20 @@
+{
+  "energy": {
+    "sounds": [
+      {
+        "name": "pickaxemod:energy",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "recharge": {
+    "sounds": [
+      {
+        "name": "pickaxemod:recharge",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  }
+}
