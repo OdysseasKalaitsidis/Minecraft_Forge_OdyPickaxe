@@ -1,13 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "XXX",
-    " Y ",
-    " Y "
+    " N ",
+    " S ",
+    " S "
   ],
   "key": {
-    "X": { "item": "minecraft:diamond" },
-    "Y": { "item": "minecraft:stick" }
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "item": "pickaxemod:ody_pickaxe",

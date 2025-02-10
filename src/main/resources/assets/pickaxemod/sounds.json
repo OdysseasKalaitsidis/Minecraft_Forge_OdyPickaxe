@@ -1,20 +1,14 @@
 {
   "energy": {
+    "category": "player",
     "sounds": [
-      {
-        "name": "pickaxemod:energy",
-        "volume": 1.0,
-        "pitch": 1.0
-      }
+      "pickaxemod:energy"
     ]
   },
   "recharge": {
+    "category": "player",
     "sounds": [
-      {
-        "name": "pickaxemod:recharge",
-        "volume": 1.0,
-        "pitch": 1.0
-      }
+      "pickaxemod:recharge"
     ]
   }
 }
