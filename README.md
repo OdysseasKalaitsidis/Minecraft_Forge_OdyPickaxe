@@ -11,7 +11,7 @@
 - Custom **sounds and effects** when activated.
 
 ### ⚡ Energy-Based Combat System  
-- The pickaxe has a **limited energy pool** (1200 ticks = 30 seconds).
+- The pickaxe has a **limited energy pool** (1400 ticks = 70 seconds).
 - **Attacking entities** consumes energy but scales damage based on remaining energy.
 - **Cooldown system** prevents infinite energy usage (**5s cooldown**).
 - A **boss bar UI**  can show energy levels.
