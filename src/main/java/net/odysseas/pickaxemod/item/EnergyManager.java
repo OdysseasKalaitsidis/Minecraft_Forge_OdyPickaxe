@@ -95,6 +95,6 @@ public class EnergyManager {
         ItemStack offHandItem = player.getOffhandItem();
 
         // Έλεγχος αν ο παίκτης κρατάει την προσαρμοσμένη αξίνα σε κάποιο από τα δύο χέρια
-        return mainHandItem.getItem() == ModItems.ODY_PICKAXE.get() || offHandItem.getItem() == ModItems.ODY_PICKAXE.get();
+        return mainHandItem.getItem() == ModItems.ody_pickaxe.get() || offHandItem.getItem() == ModItems.ody_pickaxe.get();
     }
 }

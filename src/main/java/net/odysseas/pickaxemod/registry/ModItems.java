@@ -16,7 +16,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, PickaxeMod.MODID);
 
     // Καταχώρηση της προσαρμοσμένης αξίνας
-    public static final RegistryObject<Item> ODY_PICKAXE = ITEMS.register("ody_pickaxe",
+    public static final RegistryObject<Item> ody_pickaxe = ITEMS.register("ody_pickaxe",
             () -> new CustomPickaxe(Tiers.DIAMOND, new Item.Properties().stacksTo(1)));
 
     // Εγγραφή αυτής της κλάσης στο event bus

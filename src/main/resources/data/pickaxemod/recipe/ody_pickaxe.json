@@ -1,17 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " S ",
-    " S ",
-    " S "
+    "SSS",
+    " X ",
+    " X "
   ],
   "key": {
     "S": {
       "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "minecraft:netherite_ingot"
     }
   },
   "result": {
-    "item": "pickaxemod:ODY_PICKAXE",
+    "id": "pickaxemod:ody_pickaxe",
     "count": 1
   }
 }

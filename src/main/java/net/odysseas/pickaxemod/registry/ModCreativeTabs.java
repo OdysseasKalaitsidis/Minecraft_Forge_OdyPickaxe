@@ -1,6 +1,5 @@
 package net.odysseas.pickaxemod.registry;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -17,7 +16,7 @@ public class ModCreativeTabs {
         ResourceKey<CreativeModeTab> tabKey = event.getTabKey();
 
         if (tabKey == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.accept(ModItems.ODY_PICKAXE.get());
+            event.accept(ModItems.ody_pickaxe.get());
         }
     }
 }
