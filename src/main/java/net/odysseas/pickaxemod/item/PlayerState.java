@@ -1,21 +1,21 @@
 package net.odysseas.pickaxemod.item;
 
 public class PlayerState {
-    int energy;  // Stores the pickaxe's energy level
+    int energy;  // Αποθηκεύει το επίπεδο ενέργειας της αξίνας
     boolean energySoundPlayed = false;
     boolean cooldownSoundPlayed = false;
-    boolean firstTimeHolding = true; // Ensure sound plays first time
+    boolean firstTimeHolding = true; // Εξασφαλίζει ότι ο ήχος παίζει την πρώτη φορά
     CustomBossEvent bossBar;
 
     public PlayerState(int energy) {
-        this.energy = energy;  // Initializes energy with a starting value
+        this.energy = energy;  // Αρχικοποιεί την ενέργεια με μια αρχική τιμή
     }
 
     public void resetCooldownSound() {
-        cooldownSoundPlayed = false; // Reset cooldown sound flag
+        cooldownSoundPlayed = false; // Επαναφορά της σημαίας ήχου cooldown
     }
 
     public void resetEnergySound() {
-        energySoundPlayed = false; // Reset energy sound flag
+        energySoundPlayed = false; // Επαναφορά της σημαίας ήχου ενέργειας
     }
 }

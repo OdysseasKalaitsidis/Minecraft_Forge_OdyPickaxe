@@ -17,10 +17,7 @@ public class CustomPickaxeEvents {
     // Map για να αποθηκεύουμε την κατάσταση του κάθε παίκτη
     private final Map<Player, PlayerState> playerStates = new HashMap<>();
 
-    /**
-     * Χρηστική μέθοδος: Επιστρέφει true αν ο παίκτης κρατάει το CustomPickaxe
-     * είτε στο main hand είτε στο off hand.
-     */
+
     private boolean isHoldingCustomPickaxe(Player player) {
         if (player == null) return false;
         return (player.getMainHandItem().getItem() instanceof CustomPickaxe) ||

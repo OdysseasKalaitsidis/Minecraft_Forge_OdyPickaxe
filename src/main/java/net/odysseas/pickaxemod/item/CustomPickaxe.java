@@ -9,12 +9,8 @@ public class CustomPickaxe extends PickaxeItem {
 
     public CustomPickaxe(Tier tier, Properties properties) {
         super(tier, properties);
-        // Register event handler
+        // Δηλώνει το Pickaxe
         MinecraftForge.EVENT_BUS.register(new CustomPickaxeEvents());
     }
 
-    @Override
-    public boolean isFoil(ItemStack stack) {
-        return true; // Gives a glowing effect
-    }
 }
