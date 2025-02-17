@@ -14,7 +14,7 @@ public class CustomPickaxeEvents {
     private static final int MAX_ENERGY_TICKS = 2400; // 1 min (60s * 20 ticks)
     private static final int COOLDOWN_TICKS = 300;    // 5 sec (5s * 20 ticks)
 
-    // Map για να αποθηκεύουμε την κατάσταση του κάθε παίκτη
+    // Map για να αποθηκεύουμε την κατάσταση (state) του κάθε παίκτη
     private final Map<Player, PlayerState> playerStates = new HashMap<>();
 
 
@@ -51,7 +51,7 @@ public class CustomPickaxeEvents {
         // Μειώνουμε την ενέργεια του παίκτη
         state.energy = Math.max(state.energy - 20, 0);
 
-        // Παράδειγμα κλήσης ενός sound manager (αν υπάρχει)
+        // Παράδειγμα κλήσης ενός sound manager
         SoundManager.playEnergyUseSound(player, energyPercentage);
     }
 

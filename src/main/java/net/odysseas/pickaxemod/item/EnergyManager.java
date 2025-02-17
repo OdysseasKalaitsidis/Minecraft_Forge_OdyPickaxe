@@ -8,93 +8,108 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EnergyManager {
+    // Χάρτης που κρατάει πληροφορία για το αν ο παίκτης κρατούσε την αξίνα στην προηγούμενη στιγμή
     private static final Map<Player, Boolean> wasHoldingPickaxe = new HashMap<>();
 
+     //Διαχειρίζεται την ενέργεια του παίκτη όταν κρατάει την προσαρμοσμένη αξίνα
     public static void handleEnergy(Player player, Map<Player, PlayerState> playerStates) {
-        boolean isHoldingPickaxe = isHoldingPickaxe(player);
-        boolean wasHolding = wasHoldingPickaxe.getOrDefault(player, false);
+        boolean isHoldingPickaxe = isHoldingPickaxe(player); // Ελέγχει αν ο παίκτης κρατάει το pickaxe
+        boolean wasHolding = wasHoldingPickaxe.getOrDefault(player, false); // Βρίσκει αν ο παίκτης το κρατούσε προηγουμένως
 
         if (!isHoldingPickaxe) {
-            wasHoldingPickaxe.put(player, false); // Επαναφορά αν ο παίκτης δεν κρατάει την αξίνα
+            // Αν δεν κρατάει πλέον το pickaxe, επαναφέρουμε την κατάστασή του
+            wasHoldingPickaxe.put(player, false);
             return;
         }
 
-        PlayerState state = playerStates.computeIfAbsent(player, p -> new PlayerState(1400)); // Η ενέργεια διαρκεί 70 δευτερόλεπτα (1400 ticks)
+        // Αν δεν υπάρχει ήδη, δημιουργούμε νέο PlayerState για τον παίκτη με ενέργεια 1400 (70 δευτερόλεπτα)
+        PlayerState state = playerStates.computeIfAbsent(player, p -> new PlayerState(1400));
 
-        // Αναπαραγωγή ήχου ενέργειας μόλις ο παίκτης πιάσει την αξίνα για πρώτη φορά
+        // Αν ο παίκτης μόλις έπιασε το pickaxe, παίζει ήχο ενεργοποίησης
         if (!wasHolding) {
-            state.energySoundPlayed = false; // Επαναφορά του ήχου
-            SoundManager.playEnergyUseSound(player, 1.0f);
+            state.energySoundPlayed = false; // Επαναφορά για να επιτρέψουμε τον ήχο
+            SoundManager.playEnergyUseSound(player, 1.0f); // Παίζει ήχο με μέγιστη ένταση
         }
 
-        wasHoldingPickaxe.put(player, true);
+        wasHoldingPickaxe.put(player, true); // Ενημερώνουμε ότι ο παίκτης κρατάει το pickaxe
 
         if (state.energy > 0) {
-            reduceEnergy(player, state);
+            reduceEnergy(player, state); // Αν έχει ενέργεια, μειώνεται σταδιακά
         } else if (state.energy == 0) {
-            startCooldown(player, state);
+            startCooldown(player, state); // Αν μηδενιστεί, ξεκινάει cooldown
         } else {
-            handleCooldown(player, state);
+            handleCooldown(player, state); // Αν είναι σε cooldown, προχωρά η αντίστροφη μέτρηση
         }
     }
 
-    private static void reduceEnergy(Player player, PlayerState state) {
-        state.energy--;
 
-        if (!state.energySoundPlayed) { // Αναπαραγωγή ήχου όταν ξεκινά η μείωση ενέργειας
+    //Μειώνει σταδιακά την ενέργεια του παίκτη όσο κρατάει την αξίνα
+
+    private static void reduceEnergy(Player player, PlayerState state) {
+        state.energy--; // Μείωση ενέργειας κατά 1 ανά tick
+
+        // Παίζει ήχο όταν αρχίζει να καταναλώνεται ενέργεια
+        if (!state.energySoundPlayed) {
             SoundManager.playEnergyUseSound(player, state.energy / 1400f);
             state.energySoundPlayed = true;
         }
 
+        // Επιβράδυνση του χρόνου ενώ ο παίκτης κρατάει την αξίνα
         TimeEffectManager.applyTimeSlow(player);
+
+        // Ενημέρωση της Boss Bar με το ποσοστό ενέργειας
         BossBarManager.updateBossBar(player, state, state.energy / 1400f, "Ενέργεια που απομένει");
 
+        // Αν η ενέργεια φτάσει στο 0, σηματοδοτούμε ότι η αξίνα χρειάζεται cooldown
         if (state.energy == 0) {
-            state.energySoundPlayed = false; // Επαναφορά του ήχου όταν εξαντληθεί η ενέργεια
+            state.energySoundPlayed = false; // Επαναφορά ώστε να παίξει άλλος ήχος μετά
         }
     }
 
+    //Ξεκινάει το cooldown των 5 δευτερολέπτων όταν η ενέργεια εξαντληθεί
     private static void startCooldown(Player player, PlayerState state) {
-        // 5 δευτερόλεπτα = 100 ticks ψύξης
-        state.energy = -100;
+        state.energy = -100; // 100 ticks cooldown (5 δευτερόλεπτα)
 
-        // Αναπαραγωγή ήχου cooldown μόνο μία φορά στην αρχή
+        // Παίζει ήχο cooldown αν δεν έχει παιχτεί ήδη
         if (!state.cooldownSoundPlayed) {
             SoundManager.playCooldownSound(player);
             state.cooldownSoundPlayed = true;
         }
 
+        // Ενημέρωση της Boss Bar με την αναμονή cooldown
         BossBarManager.updateBossBar(player, state, 0.0f, "Χρόνος αναμονής 5 δευτερόλεπτα");
     }
 
+    //Χειρίζεται το cooldown και επαναφέρει σταδιακά την ενέργεια
     private static void handleCooldown(Player player, PlayerState state) {
-        // Αύξηση ενέργειας από αρνητικό πίσω στο 0 σε 100 ticks (5 δευτερόλεπτα)
-        state.energy++;
+        state.energy++; // Αργή επαναφόρτιση του timer (5 δευτερόλεπτα)
 
-        // Εμφάνιση προόδου στη γραμμή boss: από -100 (0%) έως 0 (100%)
+        // Υπολογισμός προόδου cooldown (-100 έως 0 μετατρέπεται σε 0% - 100%)
         float progress = (100 + state.energy) / 100f;
         BossBarManager.updateBossBar(player, state, progress, "Πρόοδος αναμονής");
 
-        // Όταν η ενέργεια φτάσει στο 0, το cooldown τελειώνει
+        // Όταν η ενέργεια φτάσει στο 0, επαναφέρεται η πλήρης ενέργεια
         if (state.energy == 0) {
-            // Επαναφορά της ενέργειας στο μέγιστο
-            state.energy = 1400; // 70 δευτερόλεπτα
+            state.energy = 1400; // Επιστροφή στη μέγιστη ενέργεια
             state.cooldownSoundPlayed = false;
             state.energySoundPlayed = false;
 
-            // Αναπαραγωγή ήχου "επαναφοράς" (προαιρετικό)
+            // Παίζει ήχο όταν η ενέργεια επανέλθει πλήρως
             SoundManager.playEnergyUseSound(player, 1.0f);
 
-            // Ενημέρωση της γραμμής boss στο 100% ενέργεια
+            // Ενημέρωση της Boss Bar στην πλήρη ενέργεια
             BossBarManager.updateBossBar(player, state, 1.0f, "Ενέργεια επανήλθε");
         }
     }
+
+
+     //Ελέγχει αν ο παίκτης κρατάει την ειδική αξίνα στο χέρι του
 
     private static boolean isHoldingPickaxe(Player player) {
         ItemStack mainHandItem = player.getMainHandItem();
         ItemStack offHandItem = player.getOffhandItem();
 
-        // Έλεγχος αν ο παίκτης κρατάει την προσαρμοσμένη αξίνα σε κάποιο από τα δύο χέρια
+        // Επιστρέφει true αν η αξίνα βρίσκεται είτε στο κύριο είτε στο βοηθητικό χέρι
         return mainHandItem.getItem() == ModItems.ody_pickaxe.get() || offHandItem.getItem() == ModItems.ody_pickaxe.get();
     }
 }

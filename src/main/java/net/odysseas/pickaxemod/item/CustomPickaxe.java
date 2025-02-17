@@ -2,7 +2,6 @@ package net.odysseas.pickaxemod.item;
 
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CustomPickaxe extends PickaxeItem {
